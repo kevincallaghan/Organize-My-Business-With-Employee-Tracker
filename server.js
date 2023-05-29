@@ -17,18 +17,99 @@
 // THEN I am prompted to select an employee to update and their new role and this information is updated in the database 
 
 const inquirer = require('inquirer');
-const mysql = require('mysql');
+const mysql = require("mysql2");
 
 // Connect to database
 const db = mysql.createConnection(
   {
   host: 'localhost',
+  port: 3006,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME
   },
-  console.log(`Connected to the database.`)
+  console.log(`Connected to database.`)
 );
 
+db.connect((error) => {
+  if (error) {
+    console.error(`Error connecting to database:`, error);
+  } else {
+    console.log(`Connected to database.`);
+    startEmployeeOrganizer();
+  }
+});
 
+function startEmployeeOrganizer() {
+  inquirer
+    .prompt({
+      type: "list",
+      name: "start",
+      message: "What would you like to do?",
+      choices: [
+        "Add A Department",
+        "Add A Role",
+        "Add An Employee",
+        "Update Employee Role",
+        "View All Departments",
+        "View All Roles",
+        "View All Employees",        
+        "Exit Employee Organizer",
+      ],
+    })
+    .then((answer) => {
+      switch (answer.start) {
+        case "Add A Department": addDepartment();
+          break;
+        case "Add A Role": addRole();
+          break;
+        case "Add An Employee": addAnEmployee();
+          break;
+        case "Update Employee Role": updateEmployeeRole();
+          break;
+        case "View All Departments": viewAllDepartments();
+          break;
+        case "View All Roles": viewAllRoles();
+          break;
+        case "View All Employees": viewAllEmployees();
+          break;          
+        case "Exit Employee Organizer": console.log("Exiting Employee Organizer");
+          db.end(function(err) {
+            if (err) {
+              console.error('Error Exiting Employee Organizer:', err);
+            } else {
+              console.log('Employee Organizer Exited Successfully.');
+            }
+          });
+      }
+    });
+}
+
+function addDepartment() {
+
+}
+
+function addRole() {
+
+}
+
+function addAnEmployee() {
+
+}
+
+function updateEmployeeRole() {
+
+}
+
+function viewAllDepartments() {
+  
+}
+
+function viewAllRoles() {
+
+}
+
+function viewAllEmployees() {
+
+}
 
