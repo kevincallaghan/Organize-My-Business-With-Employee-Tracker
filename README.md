@@ -1,8 +1,11 @@
+![Employee Organizer ASCII](images/ASCII.jpg)
 # Organize-My-Business-With-Employee-Organizer
+
 
 ## Description
 
 The Employee Organizer was created to allow a business owner to be able to view and manage the departments, roles, and employees in their company so that they can organize and plan their business.  By running this program in the terminal, the business owner can add a new department, add a new role, add a new employee, update an employee role, view all departments, view all roles, and view all employees.
+
 
 ## Table of Contents
 
@@ -11,21 +14,24 @@ The Employee Organizer was created to allow a business owner to be able to view 
 - [Credits](#credits)
 - [License](#license)
 
+
 ## Installation
 
-Employee Organizer requires Express, Inquirer, MySQL2, DotENV, and Figlet.  These are included in the package.json, so to use the Organizer simply open the terminal and run 'npm i' to install the required dependencies.
+Employee Organizer requires Inquirer, MySQL2, DotENV, and Figlet.
+
+These are included in the package.json, so to use the Organizer simply open the terminal and run 'npm i' to install the required dependencies.
+
 
 ## Usage
 
-Link to Video Example: 
+Link to Video Example: https://watch.screencastify.com/v/Mer8TfGoHg8Ah3sYEHlA 
 
 Before using Employee Organizer, you must install the dependencies as mentioned above.  From there, run 'node server.js' to start the Employee Organizer.  Once it has loaded, you can interact with the Organizer to accomplish your managerial tasks!
 
-To add a screenshot, create an `assets/images` folder in your repository and upload your screenshot to it. Then, using the relative filepath, add it to your README using the following syntax:
+Here is a screenshot of the loaded application:
 
-    ```md
-    ![alt text](assets/images/screenshot.png)
-    ```
+![Employee Organizer](images/screenshot1.jpg)
+
 
 ## Credits
 
@@ -39,6 +45,7 @@ To add a screenshot, create an `assets/images` folder in your repository and upl
     <li><a href="https://www.w3schools.com/nodejs/nodejs_mysql_update.asp">Node.js MySQL Update</a></li>
     <li><a href="https://www.w3schools.com/nodejs/nodejs_mysql_select.asp">Node.js MySQL Select</a></li>
     </ul>
+
 
 ## License
 
