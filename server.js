@@ -113,9 +113,66 @@ function addDepartment() {
 // WHEN I choose to add a role
 // THEN I am prompted to enter the name, salary, and department for the role and that role is added to the database
 // Classwork 12-08 CRUD-Insert has info on INSERT INTO
-function addRole() {
-
+async function addRole() {
+  try {
+    const departments = await getDepartments();
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "title",
+          message: "Enter the new title:",
+        },
+        {
+          type: "input",
+          name: "salary",
+          message: "Enter the new salary:",
+        },
+        {
+          type: "list",
+          name: "department",
+          message: "Choose the department:",
+          choices: departments.map((department) => department.departName),
+        },
+      ])
+      .then((answers) => {
+        const selectedDepartment = departments.find(
+          (department) => department.departName === answers.department
+        );
+        const request = "INSERT INTO role SET ?";
+        db.query(
+          request,
+          {
+            title: answers.title,
+            salary: answers.salary,
+            depart_id: selectedDepartment.id,
+          },
+          (err, res) => {
+            if (err) throw err;
+            console.log(`The role '${answers.title}' has been added to the database.`);
+            startEmployeeOrganizer();
+          }
+        );
+      });
+  } catch (error) {
+    console.error("Error retrieving departments:", error);
+  }
 }
+
+function getDepartments() {
+  return new Promise((resolve, reject) => {
+    const query = "SELECT * FROM department";
+    db.query(query, (err, results) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+}
+
+
 
 // WHEN I choose to add an employee
 // THEN I am prompted to enter the employee’s first name, last name, role, and manager, and that employee is added to the database
