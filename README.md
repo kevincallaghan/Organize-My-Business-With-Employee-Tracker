@@ -32,6 +32,22 @@ Here is a screenshot of the loaded application:
 
 ![Employee Organizer](images/screenshot1.jpg)
 
+To Add a Department, select "Add a Department" and hit enter.  When prompted, enter the new Department Name and hit enter to add.
+
+To Add a new Role, select "Add a Role" and hit enter. When prompted, enter the new Role's Title, then hit enter.  When prompted, enter the Role's new salary, then hit enter.  When prompted, select the new Role's department from the existing departments, then hit enter.
+
+To Add a new Employee, select "Add An Employee" and hit enter.  When prompted, enter the new Employee's first name, then hit enter.  When prompted, enter the new Employee's last name, then hit enter. When prompted, select the new Employee's role from the existing roles, then hit enter.  When prompted, select the Manager for the new Employee from the list of existing employees, then hit enter.
+
+To Update an Employee's Role, select "Update Employee Role" and hit enter. When prompted, select the Employee you would like to update from the list of existing employee's, then hit enter. When prompted, select the new Role to be assigned to the selected Employee, then hit enter.
+
+To View All Departments, select "View All Departments" and hit enter.
+
+To View All Roles, select "View All Roles" and hit enter.
+
+To View All Employees, select "View All Employees" and hit enter.
+
+To Exit the application, select "Exit Employee Organizer" and hit enter.
+
 
 ## Credits
 
