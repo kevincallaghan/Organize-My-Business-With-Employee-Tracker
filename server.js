@@ -1,7 +1,6 @@
 const inquirer = require('inquirer');
 const mysql = require("mysql2");
 require('dotenv').config();
-//figlet creates cool ASCII Art
 const figlet = require('figlet');
 
 // Connect to database
@@ -13,74 +12,75 @@ const db = mysql.createConnection({
   database: process.env.DB_NAME
 });
 
-db.connect((error) => {
-  if (error) {
-    console.error(`Error connecting to database:`, error);
+// Generate ASCII (moved outside of startEmployeeOrganizer() so it only runs once when the app is loaded)
+figlet('EMPLOYEE', (err, employeeArt) => {
+  if (err) {
+    console.log('Error generating ASCII art for "EMPLOYEE":', err);
   } else {
-    console.log(`Connected to database.`);
-    startEmployeeOrganizer();
+    figlet('ORGANIZER', (err, organizerArt) => {
+      if (err) {
+        console.log('Error generating ASCII art for "ORGANIZER":', err);
+      } else {
+        console.log(employeeArt + '\n' + organizerArt);
+        startEmployeeOrganizer();
+      }
+    });
   }
 });
 
+// Initialize the application
 function startEmployeeOrganizer() {
-  figlet('EMPLOYEE', (err, employeeArt) => {
-    if (err) {
-      console.log('Error generating ASCII art for "EMPLOYEE":', err);
-    } else {
-      figlet('ORGANIZER', (err, organizerArt) => {
-        if (err) {
-          console.log('Error generating ASCII art for "ORGANIZER":', err);
-        } else {
-          console.log(employeeArt + '\n' + organizerArt);
-
-          inquirer
-            .prompt({
-              type: "list",
-              name: "start",
-              message: "What would you like to do?",
-              loop: false,
-              choices: [
-                "Add A Department",
-                "Add A Role",
-                "Add An Employee",
-                "Update Employee Role",
-                "View All Departments",
-                "View All Roles",
-                "View All Employees",
-                "Exit Employee Organizer",
-              ],
-            })
-            .then((answer) => {
-              switch (answer.start) {
-                case "Add A Department": addDepartment();
-                  break;
-                case "Add A Role": addRole();
-                  break;
-                case "Add An Employee": addAnEmployee();
-                  break;
-                case "Update Employee Role": updateEmployeeRole();
-                  break;
-                case "View All Departments": viewAllDepartments();
-                  break;
-                case "View All Roles": viewAllRoles();
-                  break;
-                case "View All Employees": viewAllEmployees();
-                  break;
-                case "Exit Employee Organizer":
-                  console.log("Exiting Employee Organizer");
-                  db.end(function (err) {
-                    if (err) {
-                      console.error('Error Exiting Employee Organizer:', err);
-                    } else {
-                      console.log('Employee Organizer Exited Successfully.');
-                    }
-                  });
-              }
-            });
-        }
-      });
-    }
-  });
+  inquirer
+    .prompt({
+      type: "list",
+      name: "start",
+      message: "What would you like to do?",
+      loop: false,
+      choices: [
+        "Add A Department",
+        "Add A Role",
+        "Add An Employee",
+        "Update Employee Role",
+        "View All Departments",
+        "View All Roles",
+        "View All Employees",
+        "Exit Employee Organizer",
+      ],
+    })
+    .then((answer) => {
+      switch (answer.start) {
+        case "Add A Department":
+          addDepartment();
+          break;
+        case "Add A Role":
+          addRole();
+          break;
+        case "Add An Employee":
+          addAnEmployee();
+          break;
+        case "Update Employee Role":
+          updateEmployeeRole();
+          break;
+        case "View All Departments":
+          viewAllDepartments();
+          break;
+        case "View All Roles":
+          viewAllRoles();
+          break;
+        case "View All Employees":
+          viewAllEmployees();
+          break;
+        case "Exit Employee Organizer":
+          console.log("Exiting Employee Organizer");
+          db.end(function (err) {
+            if (err) {
+              console.error('Error Exiting Employee Organizer:', err);
+            } else {
+              console.log('Employee Organizer Exited Successfully.');
+            }
+          });
+      }
+    });
 }
 
 
