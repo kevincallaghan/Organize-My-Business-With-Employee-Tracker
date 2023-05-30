@@ -36,7 +36,9 @@ To add a screenshot, create an `assets/images` folder in your repository and upl
 
 1. I used the article from MDN Web Docs to figure out the structure of Switch Case and break.  Here is the link to the article: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch 
 
+2. I used figlet to create the ASCII art.  This Github repo from the user 'Patorjk' has tutorials for implementing figlet that I used: https://github.com/patorjk/figlet.js/ 
 
+3.
 
 ## License
 

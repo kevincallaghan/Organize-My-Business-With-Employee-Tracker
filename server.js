@@ -18,18 +18,18 @@
 
 const inquirer = require('inquirer');
 const mysql = require("mysql2");
+require('dotenv').config();
+//figlet creates cool ASCII Art
+const figlet = require('figlet');
 
 // Connect to database
-const db = mysql.createConnection(
-  {
+const db = mysql.createConnection({
   host: 'localhost',
-  port: 3006,
+  port: 3306,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME
-  },
-  console.log(`Connected to database.`)
-);
+});
 
 db.connect((error) => {
   if (error) {
@@ -41,49 +41,74 @@ db.connect((error) => {
 });
 
 function startEmployeeOrganizer() {
-  inquirer
-    .prompt({
-      type: "list",
-      name: "start",
-      message: "What would you like to do?",
-      choices: [
-        "Add A Department",
-        "Add A Role",
-        "Add An Employee",
-        "Update Employee Role",
-        "View All Departments",
-        "View All Roles",
-        "View All Employees",        
-        "Exit Employee Organizer",
-      ],
-    })
-    .then((answer) => {
-      switch (answer.start) {
-        case "Add A Department": addDepartment();
-          break;
-        case "Add A Role": addRole();
-          break;
-        case "Add An Employee": addAnEmployee();
-          break;
-        case "Update Employee Role": updateEmployeeRole();
-          break;
-        case "View All Departments": viewAllDepartments();
-          break;
-        case "View All Roles": viewAllRoles();
-          break;
-        case "View All Employees": viewAllEmployees();
-          break;          
-        case "Exit Employee Organizer": console.log("Exiting Employee Organizer");
-          db.end(function(err) {
-            if (err) {
-              console.error('Error Exiting Employee Organizer:', err);
-            } else {
-              console.log('Employee Organizer Exited Successfully.');
-            }
-          });
-      }
-    });
+  figlet('EMPLOYEE', (err, employeeArt) => {
+    if (err) {
+      console.log('Error generating ASCII art for "EMPLOYEE":', err);
+    } else {
+      figlet('ORGANIZER', (err, organizerArt) => {
+        if (err) {
+          console.log('Error generating ASCII art for "ORGANIZER":', err);
+        } else {
+          console.log(employeeArt + '\n' + organizerArt);
+
+          inquirer
+            .prompt({
+              type: "list",
+              name: "start",
+              message: "What would you like to do?",
+              loop: false,
+              choices: [
+                "Add A Department",
+                "Add A Role",
+                "Add An Employee",
+                "Update Employee Role",
+                "View All Departments",
+                "View All Roles",
+                "View All Employees",
+                "Exit Employee Organizer",
+              ],
+            })
+            .then((answer) => {
+              switch (answer.start) {
+                case "Add A Department":
+                  addDepartment();
+                  break;
+                case "Add A Role":
+                  addRole();
+                  break;
+                case "Add An Employee":
+                  addAnEmployee();
+                  break;
+                case "Update Employee Role":
+                  updateEmployeeRole();
+                  break;
+                case "View All Departments":
+                  viewAllDepartments();
+                  break;
+                case "View All Roles":
+                  viewAllRoles();
+                  break;
+                case "View All Employees":
+                  viewAllEmployees();
+                  break;
+                case "Exit Employee Organizer":
+                  console.log("Exiting Employee Organizer");
+                  db.end(function (err) {
+                    if (err) {
+                      console.error('Error Exiting Employee Organizer:', err);
+                    } else {
+                      console.log('Employee Organizer Exited Successfully.');
+                    }
+                  });
+              }
+            });
+        }
+      });
+    }
+  });
 }
+
+
 
 function addDepartment() {
 
