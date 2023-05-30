@@ -272,20 +272,38 @@ function updateEmployeeRole() {
 // THEN I am presented with a formatted table showing department names and department ids
 //
 function viewAllDepartments() {
-  
+  const req = `SELECT * FROM department;`;
+    console.log("All Departments:");
+  db.query(req, (err, res) => {
+    if (err) throw err;
+    console.table(res);
+    startEmployeeOrganizer();
+  });
 }
 
 // WHEN I choose to view all roles
 // THEN I am presented with the job title, role id, the department that role belongs to, and the salary for that role
 //
 function viewAllRoles() {
-
+  const req = `SELECT role.id, role.title, department.departName, role.salary FROM role JOIN department ON role.depart_id = department.id;`;
+  console.log("All Roles:");
+  db.query(req, (err, res) => {
+    if (err) throw err;
+    console.table(res);
+    startEmployeeOrganizer();
+  });
 }
 
 // WHEN I choose to view all employees
 // THEN I am presented with a formatted table showing employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
 //
 function viewAllEmployees() {
-
+  const req = `SELECT employee.id, employee.firstName, employee.lastName, role.title, department.departName FROM employee JOIN role ON employee.role_id = role.id JOIN department ON role.depart_id = department.id`;
+  console.log("All Employees:");
+  db.query(req, (err, res) => {
+    if (err) throw err;
+    console.table(res);
+    startEmployeeOrganizer();
+  });
 }
 
