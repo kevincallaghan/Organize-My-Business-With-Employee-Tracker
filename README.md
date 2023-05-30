@@ -1,17 +1,10 @@
-# Organize-My-Business-With-Employee-Tracker
+# Organize-My-Business-With-Employee-Organizer
 
 ## Description
 
-Provide a short description explaining the what, why, and how of your project. Use the following questions as a guide:
-
-- What was your motivation?
-- Why did you build this project? (Note: the answer is not "Because it was a homework assignment.")
-- What problem does it solve?
-- What did you learn?
+The Employee Organizer was created to allow a business owner to be able to view and manage the departments, roles, and employees in their company so that they can organize and plan their business.  By running this program in the terminal, the business owner can add a new department, add a new role, add a new employee, update an employee role, view all departments, view all roles, and view all employees.
 
 ## Table of Contents
-
-If your README is long, add a table of contents to make it easy for users to find what they need.
 
 - [Installation](#installation)
 - [Usage](#usage)
@@ -20,11 +13,13 @@ If your README is long, add a table of contents to make it easy for users to fin
 
 ## Installation
 
-What are the steps required to install your project? Provide a step-by-step description of how to get the development environment running.
+Employee Organizer requires Express, Inquirer, MySQL2, DotENV, and Figlet.  These are included in the package.json, so to use the Organizer simply open the terminal and run 'npm i' to install the required dependencies.
 
 ## Usage
 
-Provide instructions and examples for use. Include screenshots as needed.
+Link to Video Example: 
+
+Before using Employee Organizer, you must install the dependencies as mentioned above.  From there, run 'node server.js' to start the Employee Organizer.  Once it has loaded, you can interact with the Organizer to accomplish your managerial tasks!
 
 To add a screenshot, create an `assets/images` folder in your repository and upload your screenshot to it. Then, using the relative filepath, add it to your README using the following syntax:
 
@@ -38,7 +33,12 @@ To add a screenshot, create an `assets/images` folder in your repository and upl
 
 2. I used figlet to create the ASCII art.  This Github repo from the user 'Patorjk' has tutorials for implementing figlet that I used: https://github.com/patorjk/figlet.js/ 
 
-3.
+3. I used w3schools.com documentation for Node.js MYSQL.  Here are the pages I used:
+    <ul>
+    <li><a href="https://www.w3schools.com/nodejs/nodejs_mysql_insert.asp">Node.js MySQL Insert</a></li>
+    <li><a href="https://www.w3schools.com/nodejs/nodejs_mysql_update.asp">Node.js MySQL Update</a></li>
+    <li><a href="https://www.w3schools.com/nodejs/nodejs_mysql_select.asp">Node.js MySQL Select</a></li>
+    </ul>
 
 ## License
 
