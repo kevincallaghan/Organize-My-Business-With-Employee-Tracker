@@ -177,8 +177,88 @@ function getDepartments() {
 // WHEN I choose to add an employee
 // THEN I am prompted to enter the employee’s first name, last name, role, and manager, and that employee is added to the database
 // Classwork 12-08 CRUD-Insert has info on INSERT INTO
-function addAnEmployee() {
+async function addAnEmployee() {
+  try {
+    const roles = await getRoles();
+    const managers = await getManagers();
 
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "firstName",
+          message: "Enter first name:",
+        },
+        {
+          type: "input",
+          name: "lastName",
+          message: "Enter last name:",
+        },
+        {
+          type: "list",
+          name: "role_id",
+          message: "Select role:",
+          choices: roles.map((role) => ({
+            name: role.title,
+            value: role.id,
+          })),
+        },
+        {
+          type: "list",
+          name: "manager_id",
+          message: "Please choose a manager for this employee",
+          choices: [{ name: "none", value: null }, ...managers.map((manager) => ({
+            name: `${manager.firstName} ${manager.lastName}`,
+            value: manager.id,
+          }))],
+        },
+      ])
+      .then((answers) => {
+        const request = "INSERT INTO employee SET ?";
+        db.query(
+          request,
+          {
+            firstName: answers.firstName,
+            lastName: answers.lastName,
+            role_id: answers.role_id,
+            manager_id: answers.manager_id,
+          },
+          (err, res) => {
+            if (err) throw err;
+            console.log(`'${answers.firstName} ${answers.lastName}' has been added to the database.`);
+            startEmployeeOrganizer();
+          }
+        );
+      });
+  } catch (error) {
+    console.error("Error retrieving roles/managers:", error);
+  }
+}
+
+function getRoles() {
+  return new Promise((resolve, reject) => {
+    const query = "SELECT * FROM role";
+    db.query(query, (err, results) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+}
+
+function getManagers() {
+  return new Promise((resolve, reject) => {
+    const query = "SELECT * FROM employee";
+    db.query(query, (err, results) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(results);
+      }
+    });
+  });
 }
 
 // WHEN I choose to update an employee role
