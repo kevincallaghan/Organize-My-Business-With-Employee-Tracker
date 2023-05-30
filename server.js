@@ -214,9 +214,9 @@ async function addAnEmployee() {
         },
       ])
       .then((answers) => {
-        const request = "INSERT INTO employee SET ?";
+        const req = "INSERT INTO employee SET ?";
         db.query(
-          request,
+          req,
           {
             firstName: answers.firstName,
             lastName: answers.lastName,
@@ -264,9 +264,70 @@ function getManagers() {
 // WHEN I choose to update an employee role
 // THEN I am prompted to select an employee to update and their new role and this information is updated in the database 
 // Classwork 12-10 CRUD-DELETE has info on UPDATE
-function updateEmployeeRole() {
+async function updateEmployeeRole() {
+  const employees = await getEmployees();
+  const roles = await getRoles();
 
+  inquirer
+    .prompt([
+      {
+        type: 'list',
+        name: 'employee_id',
+        message: 'Select employee:',
+        choices: employees.map((employee) => ({
+          name: `${employee.firstName} ${employee.lastName}`,
+          value: employee.id,
+        })),
+      },
+      {
+        type: 'list',
+        name: 'role_id',
+        message: 'Select the new role for the employee:',
+        choices: roles.map((role) => ({
+          name: role.title,
+          value: role.id,
+        })),
+      },
+    ])
+    .then((answers) => {
+      const employeeId = answers.employee_id;
+      const roleId = answers.role_id;
+
+      const req = 'UPDATE employee SET role_id = ? WHERE id = ?';
+      db.query(req, [roleId, employeeId], (err, res) => {
+        if (err) throw err;
+        console.log(`Employee's role has been updated successfully.`);
+        startEmployeeOrganizer();
+      });
+    });
 }
+
+async function getEmployees() {
+  return new Promise((resolve, reject) => {
+    const query = 'SELECT id, firstName, lastName FROM employee';
+    db.query(query, (err, results) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+}
+
+async function getRoles() {
+  return new Promise((resolve, reject) => {
+    const query = 'SELECT id, title FROM role';
+    db.query(query, (err, results) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+}
+
 
 // WHEN I choose to view all departments
 // THEN I am presented with a formatted table showing department names and department ids
